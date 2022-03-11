@@ -1,35 +1,36 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 /**
- * main - Entry point
- *
- * Return: Always 0
-*/
-
+ * main - create 2 pairs of numbers that do not repeat
+ * Return: 0
+ */
 int main(void)
 {
-	int p, q;
+	int j, i;
 
-	for (p = 0; p <= 98; p++)
+	for (j = 0; j <= 99; j++)
 	{
-		for (q = p + 1; q <= 99; q++)
+		for (i = j; i <= 99; i++)
 		{
-			putchar((p / 10) + '0');
-			putchar((p % 10) + '0');
-			putchar(' ');
-			putchar((q / 10) + '0');
-			putchar((q % 10) + '0');
+			if (i != j)
+			{
 
-			if (p == 98 && q == 99)
-				continue;
+				putchar(j / 10 + 48);
+				putchar(j % 10 + 48);
+				putchar(' ');
+				putchar(i / 10 + 48);
+				putchar(i % 10 + 48);
 
-			putchar(',');
-			putchar(' ');
+				if (j * 100 + i != 9899)
+				{
+					putchar(',');
+					putchar(' ');
+				}
+			}
+
 		}
-	}
 
+	}
 	putchar('\n');
 	return (0);
 }

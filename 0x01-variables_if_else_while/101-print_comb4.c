@@ -5,23 +5,30 @@
 /**
  * main - Entry point
  *
- * Return: Always 0 (Success)
- */
-
+ * Return: Always 0
+*/
 int main(void)
 {
-	int d;
+	int p, q;
 
-	for (d = 0; d < 100; d++)
+	for (p = 0; p <= 98; p++)
 	{
-		putchar((d / 10) + '0');
-		putchar((d % 10) + '0');
-		if (d != 99)
+		for (q = p + 1; q <= 99; q++)
 		{
+			putchar((p / 10) + '0');
+			putchar((p % 10) + '0');
+			putchar(' ');
+			putchar((q / 10) + '0');
+			putchar((q % 10) + '0');
+
+			if (p == 98 && q == 99)
+				continue;
+
 			putchar(',');
 			putchar(' ');
 		}
 	}
+
 	putchar('\n');
 	return (0);
 }

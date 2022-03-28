@@ -7,23 +7,21 @@
  */
 char *rot13(char *s)
 {
-    int i;
+int i, ii;
+char input[] =  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+char output[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
-    char rot13[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    char ROT13[] = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM";
-    char *ptr = s;
-
-    while (*s)
-    {
-        for (i = 0; i <= 52; i++)
-        {
-            if (*s == rot13[i])
-            {
-                *s = ROT13[i];
-                break;
-            }
-        }
-        s++;
-    }
-    return (ptr);
+for (i = 0; s[i] != '\0'; i++)
+{
+	for (ii = 0; ii < 54; ii++)
+	{
+		if (((s[i] <= 'z' && s[i] >= 'a') || (s[i] <= 'Z' && s[i] >= 'A'))
+		&& s[i] == input[ii])
+		{
+			s[i] = output[ii];
+			break;
+		}
+	}
+}
+return (s);
 }

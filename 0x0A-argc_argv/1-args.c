@@ -8,7 +8,11 @@
  */
 int main(int argc, char *argv[])
 {
-	(void)argc;
-	printf("%s\n", argv[0]);
+	int sum = 0;
+
+	(void)argv;
+	while (--argc)
+		sum++;
+	printf("%i\n", sum);
 	return (0);
 }

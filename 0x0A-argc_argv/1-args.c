@@ -6,11 +6,13 @@
  * @argv: The arguement values
  * Return: Always 0 (Success)
  */
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
-    while (argc--)
-    {
-        printf("%s\n", *argv++);
-    }
-    return (0);
+	int sum = 0;
+
+	(void)argv;
+	while (--argc)
+		sum++;
+	printf("%i\n", sum);
+	return (0);
 }

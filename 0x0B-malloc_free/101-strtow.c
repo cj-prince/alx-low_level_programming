@@ -1,11 +1,12 @@
-#include "main.h"
 #include <stdlib.h>
 
 /**
- * strtow - A function that splits a string into words
- * @str: An input pointer of the string to split
- * Return: Apointer to concatened strings or NULL if it str is NULL
+ * strtow - char
+ * @str: pointer to string params
+ * Return: char
  */
+
+char **strtow(char *str)
 char **strtow(char *str)
 {
 	int i = 0, j = 0, k = 0;

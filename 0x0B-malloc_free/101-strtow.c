@@ -1,3 +1,4 @@
+#include "main.h"
 #include <stdlib.h>
 
 /**
@@ -6,7 +7,6 @@
  * Return: char
  */
 
-char **strtow(char *str)
 char **strtow(char *str)
 {
 	int i = 0, j = 0, k = 0;

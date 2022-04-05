@@ -6,7 +6,6 @@
  * @str: pointer to string params
  * Return: char
  */
-
 char **strtow(char *str)
 {
 	int i = 0, j = 0, k = 0;

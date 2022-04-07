@@ -1,137 +1,127 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
 /**
-  * int_calloc - special calloc but 4 int arrays
-  * @nmemb: n memb
-  * @size: size of array
-  * Return: int *
-  */
-int *int_calloc(int nmemb, unsigned int size)
+ * main - multiplies two positive numbers
+ * @argc: argument count
+ * @argv: argument vectors
+ * Return: 0
+ */
+int main(int argc, char *argv[])
 {
-	/* declarations */
-	int *p, n;
-	/* checking inputs */
-	if (nmemb == 0 || size == 0)
-		return (NULL);
-	/* malloc the space & check for fail */
-	p = malloc(nmemb * size);
-	if (p == NULL)
-		return (NULL);
-	/* calloc */
-	for (n = 0; n < nmemb; n++)
-		p[n] = 0;
-	return (p);
-}
+	char *f = argv[1];
+	char *s = argv[2];
 
-/**
-  * mult - multiplication
-  * @product: int * 4 answer
-  * @n1: string num1
-  * @n2: string num2
-  * @len1: len num1
-  * @len2: len num2
-  * Return: void
-  */
-void mult(int *product, char *n1, char *n2, int len1, int len2)
-{
-	/* declarations */
-	int i;
-	int j;
-	int f1, f2;
-	int sum;
-	/* the long math */
-	for (i = len1 - 1; i >= 0; i--)
+	if (argc != 3 || !onlyNumbers(f) || !onlyNumbers(s))
 	{
-		sum = 0;
-		f1 = n1[i] - '0';
-		for (j = len2 - 1; j >= 0; j--)
-		{
-			f2 = n2[j] - '0';
-			sum += product[i + j + 1] + (f1 * f2);
-			product[i + j + 1] = sum % 10;
-			sum /= 10;
-		}
-		if (sum > 0)
-			product[i + j + 1] += sum;
+		printf("Error\n");
+		exit(98);
 	}
-	for (i = 0; product[i] == 0 && i < len1 + len2; i++)
-	{}
-	if (i == len1 + len2)
-		_putchar('0');
-	for (; i < len1 + len2; i++)
-		_putchar(product[i] + '0');
-	_putchar('\n');
+	if (*f == 48 || *s == 48)
+		printf("0\n");
+	else
+		multiply(s, f);
+	return (0);
 }
 
 /**
-  * is_valid - is the number a valid one
-  * @num : char string num
-  * Return: int, 1 if true 0 if false
-  */
-int is_valid(char *num)
+ * multiply - multiplies two numbers and displays it
+ * @f: first "number"
+ * @s: second "number"
+ */
+void multiply(char *f, char *s)
 {
-	/* declarations */
-	int i;
-	/* checking for ints */
-	for (i = 0; num[i]; i++)
+	int i, len1, len2, total, fdigit, sdigit, res = 0, tmp;
+	int *ptr;
+
+	len1 = _strlen(f);
+	len2 = _strlen(s);
+	tmp = len2;
+	total = len1 + len2;
+	ptr = _calloc(sizeof(int), (len1 + len2));
+	for (len1--; len1 >= 0; len1--)
 	{
-		if (num[i] < '0' || num[i] > '9')
+		fdigit = f[len1] - '0';
+		res = 0;
+		len2 = tmp;
+		for (len2--; len2 >= 0; len2--)
+		{
+			sdigit = s[len2] - '0';
+			res += ptr[len2 + len1 + 1] + (fdigit * sdigit);
+			ptr[len1 + len2 + 1] = res % 10;
+			res /= 10;
+		}
+		if (res)
+			ptr[len1 + len2 + 1] = res % 10;
+	}
+	while (*ptr == 0)
+	{
+		ptr++;
+		total--;
+	}
+	for (i = 0; i < total; i++)
+		printf("%i", ptr[i]);
+	printf("\n");
+}
+/**
+ * onlyNumbers - determines if string has only numbers
+ * @c: input string
+ * Return: 0 if false, 1 if true
+ */
+int onlyNumbers(char *c)
+{
+	while (*c)
+	{
+		if (*c < '0' || *c > '9')
 			return (0);
+		c++;
 	}
 	return (1);
 }
+
 /**
-  * err - errors r us
-  * @status: error code 4 exit
-  * Return: void
-  */
-void err(int status)
+ * _strlen - returns the length of a string
+ * @s: string s
+ * Return: length of string
+ */
+int _strlen(char *s)
 {
-	_putchar('E');
-	_putchar('r');
-	_putchar('r');
-	_putchar('o');
-	_putchar('r');
-	_putchar('\n');
-	exit(status);
+	char *p = s;
+
+	while (*s)
+		s++;
+	return (s - p);
 }
+
 /**
-  * main - getting the args
-  * @argc: args #
-  * @argv: arg array
-  * Return: 0
-  */
-int main(int argc, char **argv)
+ * _memset - fills memory with a constant byte
+ * @s: memory area
+ * @b: constant byte
+ * @n: bytes of the memory area
+ * Return: pointer to the memory area s
+ */
+char *_memset(char *s, char b, unsigned int n)
 {
-	/* declarations */
-	int i, j, len1 = 0, len2 = 0;
-	int *res;
-	/* too many args? too few? */
-	if (argc != 3)
-	{
-		err(98);
-	}
-	/* using isvalid */
-	for (i = 1; i < argc; i++)
-	{
-		if (!(is_valid(argv[i])))
-			err(98);
-		if (i == 1)
-		{
-			for (j = 0; argv[i][j]; j++)
-				len1++;
-		}
-		if (i == 2)
-		{
-			for (j = 0; argv[i][j]; j++)
-				len2++;
-		}
-	}
-	res = int_calloc(len1 + len2, sizeof(int));
-	if (res == NULL)
-		err(98);
-	mult(res, argv[1], argv[2], len1, len2);
-	free(res);
-	return (0);
+	char *ptr = s;
+
+	while (n--)
+		*s++ = b;
+	return (ptr);
+}
+
+/**
+ * _calloc - allocates memory for an array, using malloc
+ * @nmemb: number of elements of pointer
+ * @size: size of each member
+ * Return: pointer of allocated memory
+ */
+void *_calloc(unsigned int nmemb, unsigned int size)
+{
+	void *ptr;
+
+	if (!nmemb || !size)
+		return (NULL);
+	ptr = malloc(size * nmemb);
+	if (!ptr)
+		return (NULL);
+	_memset(ptr, 0, size * nmemb);
+	return (ptr);
 }

@@ -1,68 +1,47 @@
 #include "dog.h"
-/**
- * _strdup - returns a pointer to space in memory containing copy of string.
- * @s: pointer to the string.
- * Return: Pointer to a string stored in memory.
- */
-char *_strdup(char *s)
-{
-	char *dup;
-	unsigned int i = 0;
-	unsigned int j = 0;
-
-	if (s == NULL)
-		return (NULL);
-/*Get the length of the string.*/
-	while (s[i] != '\0')
-		i += 1;
-/*+1 to include the terminating character in size.*/
-	i++;
-
-	dup = malloc(i * sizeof(*dup));
-	if (dup == NULL)
-		return (NULL);
-	while (j < i)
-	{
-		dup[j] = s[j];
-		j++;
-	}
-	return (dup);
-}
-
-
-
+#include <stdlib.h>
 
 /**
- *new_dog - create an instance of struct dog.
- *@name:firt argument.
- *@age:second argument.
- *@owner: Third argument.
- *Return: instance of struct.
+ * new_dog - creates a new dog structure
+ * @name: Dog's name
+ * @age: Dog's age
+ * @owner: Dog's owner
+ * Return: returns a pointer to newly created dog structure
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *newdog;
+	dog_t *new_dog;
+	char *cpyname, *cpyowner;
+	int len_name = 0, len_owner = 0, i;
 
-	newdog = malloc(sizeof(struct dog));
+	if (name == NULL || owner == NULL)
+		return (NULL);
 
-	if (newdog == NULL)
-		return (NULL);
-/*Assign name element of new struct to the copy of name.*/
-	newdog->name = _strdup(name);
-	if (newdog->name == NULL)
-	{
-		free(newdog);
-		return (NULL);
-	}
-/*Assgin owner element of new struct to the copy of ownwer.*/
-	newdog->owner = _strdup(owner);
-	if (newdog->owner == NULL)
-	{
-		free(newdog->name);
-		free(newdog);
-		return (NULL);
-	}
-	newdog->age = age;
+	while (name[len_name])
+		len_name++;
+	while (owner[len_owner])
+		len_owner++;
 
-	return (newdog);
+	new_dog = malloc(sizeof(dog_t));
+	if (new_dog == NULL)
+		return (NULL);
+
+	cpyname = malloc(len_name + 1);
+	if (cpyname == NULL)
+		return (NULL);
+	for (i = 0; name[i]; i++)
+		cpyname[i] = name[i];
+	cpyname[i] = '\0';
+
+	cpyowner = malloc(len_owner + 1);
+	if (cpyowner == NULL)
+		return (NULL);
+	for (i = 0; owner[i]; i++)
+		cpyowner[i] = owner[i];
+	cpyowner[i] = '\0';
+
+	new_dog->name = cpyname;
+	new_dog->age = age;
+	new_dog->owner = cpyowner;
+	return (new_dog);
 }

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#if !defined(FUNCTION_POINTER_H)
+#ifndef FUNCTION_POINTER_H
 #define FUNCTION_POINTER_H
 
 int _putchar(char c);

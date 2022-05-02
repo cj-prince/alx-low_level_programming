@@ -1,34 +1,20 @@
 #include "main.h"
-#include <string.h>
+#include <stdio.h>
 /**
- * _stoi - converts chars to ints
- * @c: char to convert
- * Return: converted int
+ * print_binary -  prints the binary representation of a number
+ * @n: integer to convert
  */
-unsigned int _stoi(char c)
+void print_binary(unsigned long int n)
 {
-	return ((unsigned int) c - '0');
-}
-/**
- * binary_to_uint - converts a string of 1's and 0's to a decimal number
- * @b: string to convert
- * Return: unsigned decimal number
- */
-unsigned int binary_to_uint(const char *b)
-{
-	int i;
-	unsigned int result, tmp, expo;
+	int i, flag;
 
-	if (!b)
-		return (0);
-	result = tmp = 0;
-	expo = 1;
-	for (i = strlen(b) - 1; b[i]; i--, expo *= 2)
+	if (n == 0)
+		_putchar('0');
+	for (flag = 0, i = sizeof(n) * 8 - 1; i >= 0; i--)
 	{
-		if (b[i] != '0' && b[i] != '1')
-			return (0);
-		tmp = _stoi(b[i]);
-		result += tmp * expo;
+		if ((n >> i) & 1)
+			flag = 1;
+		if (flag == 1)
+			((n >> i) & 1) ? _putchar('1') : _putchar('0');
 	}
-	return (result);
 }
